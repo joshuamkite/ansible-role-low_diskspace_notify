@@ -10,7 +10,7 @@ galaxy_info:
   # - BSD (default)
   # - MIT
   # - GPLv2
-   - GPLv3
+  # - GPLv3
   # - Apache
   # - CC-BY
   license: license (GPLv3)
