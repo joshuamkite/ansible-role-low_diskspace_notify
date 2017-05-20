@@ -1,0 +1,22 @@
+---
+# tasks file for joshuamkite.low_diskspace_notify
+
+    - name: install notification-daemon (will pull in desktop environment if not already present)
+      package:
+        name: mate-notification-daemon
+        state: present
+
+    - name: Copy new "/opt/checklowdisk" file into place
+      copy:
+        src: checklowdisk
+        dest: /opt/checklowdisk
+        owner: root
+        group: root
+        mode: 0755
+      
+    - name: Ensure a job that runs hourly exists running  /opt/checklowdisk
+      cron:
+        name: "check disk usage"
+        hour: "*"
+        minute: "0"
+        job: env DISPLAY=:0 /opt/checklowdisk

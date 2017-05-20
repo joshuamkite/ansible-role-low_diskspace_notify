@@ -1,0 +1,20 @@
+#!/bin/bash
+#Installed by Ansible for role joshuamkite.low_diskspace_notify
+#
+#
+#this script checks the free disk space on local '/' partition. It presumes this is the default lvm volume group '*root'. It will show a pop-up message for 30 seconds with 'normal' priority when the disk usage is greater than the minor warning percentage. If greater than the major warning percentage, it will show a pop-up with 'high' priority message for 5 minutes. 
+
+DISKUSAGE=`df -h | grep root | awk '{ print substr($5,0,2)}'`
+
+#Set major warning percentage here
+if [ "$DISKUSAGE" -gt 90 ] ; then
+/usr/bin/notify-send -u critical -t 300000 \
+'Check your disk usage!' "Your root file system is $DISKUSAGE% full"
+exit
+fi
+
+#Set minor warning percentage here
+if [ "$DISKUSAGE" -gt 80 ] ; then
+/usr/bin/notify-send -u normal -t 30000 \
+'Check your disk usage!' "Your root file system is $DISKUSAGE% full"
+fi
